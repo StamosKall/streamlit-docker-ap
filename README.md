@@ -11,19 +11,9 @@
 
 ### Βήματα Εκτέλεσης:
 
-1. **Κλωνοποιήστε το αποθετήριο του έργου**:
+1. **Κλωνοποιήστε το αποθετήριο του έργου, δημιουργήστε το Docker image και εκκινήστε το container**:
    ```bash
-   git clone https://github.com/StamosKall/streamlit-docker-ap.git
-   cd streamlit-docker-ap
-2.Δημιουργήστε το Docker image και εκκινήστε το container:
-
-'''bash
-docker build -t my-streamlit-app .
-docker run -p 8501:8501 my-streamlit-app
-Ανοίξτε τον browser:
-
-3.Αφού εκκινήσετε το container, ανοίξτε έναν browser και επισκεφθείτε τη διεύθυνση:
-
-http://localhost:8501
-Η εφαρμογή θα εμφανιστεί εκεί και θα είναι έτοιμη προς χρήση.
-
+   git clone https://github.com/StamosKall/streamlit-docker-ap.git && \
+   cd streamlit-docker-ap && \
+   docker build -t my-streamlit-app . && \
+   docker run -p 8501:8501 my-streamlit-app
