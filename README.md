@@ -17,3 +17,12 @@
    cd streamlit-docker-ap && \
    docker build -t my-streamlit-app . && \
    docker run -p 8501:8501 my-streamlit-app
+
+Ανοίξτε τον browser:
+
+Αφού εκκινήσετε το container, ανοίξτε έναν browser και επισκεφθείτε τη διεύθυνση:
+
+http://localhost:8501
+
+Η εφαρμογή θα εμφανιστεί εκεί και θα είναι έτοιμη προς χρήση.
+
