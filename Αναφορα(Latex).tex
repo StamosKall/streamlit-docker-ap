@@ -1,0 +1,142 @@
+\documentclass[a4paper,12pt]{article}
+
+% Packages for better formatting and functionalities
+\usepackage[utf8]{inputenc}
+\usepackage[english, greek]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{alltt} % Για χρήση με αγγλικούς χαρακτήρες
+\geometry{a4paper, margin=1in}
+
+\title{Αναφορά για την Εφαρμογή Εξόρυξης και Ανάλυσης Δεδομένων}
+\author{Σταμάτης Καλλιπόσης \textlatin{inf2021071} \\ Φίλιππος Μπητόπουλος \textlatin{inf2021158} }
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Εισαγωγή}
+
+Η εργασία μας αφορά την ανάπτυξη μιας \textlatin{web-based} εφαρμογής για την εξόρυξη και ανάλυση δεδομένων με χρήση του \textbf{\textlatin{Streamlit}} και την δημιουργία ενός περιβάλλοντος εκτέλεσης μέσω \textbf{\textlatin{Docker}}. Η εφαρμογή επιτρέπει τη φόρτωση δεδομένων σε μορφή πίνακα (π.χ., \textlatin{CSV}, \textlatin{Excel}) και την εκτέλεση αλγορίθμων επιλογής χαρακτηριστικών και κατηγοριοποίησης. Επίσης, υποστηρίζει την οπτικοποίηση δεδομένων με τη χρήση αλγορίθμων μείωσης διάστασης (\textlatin{PCA} και \textlatin{UMAP}) και παρέχει αποτελέσματα βασισμένα σε μετρικές απόδοσης (\textlatin{accuracy}, \textlatin{F1-score}, \textlatin{ROC-AUC}).
+
+Στόχος της εφαρμογής είναι να επιτρέψει στους χρήστες να φορτώνουν δεδομένα, να αναλύουν τα χαρακτηριστικά τους, και να εφαρμόζουν αλγόριθμους μηχανικής μάθησης με εύκολο και διαδραστικό τρόπο.
+
+\section{Σχεδιασμός της Εφαρμογής}
+
+Η εφαρμογή αποτελείται από διάφορα μέρη, καθένα από τα οποία αντιστοιχεί σε μία συγκεκριμένη λειτουργία. Ο σχεδιασμός της βασίζεται στη χρήση του \textlatin{Streamlit} για την εμφάνιση μιας διαδραστικής διεπαφής και του \textlatin{Python} για την υλοποίηση αλγορίθμων ανάλυσης δεδομένων. Η εφαρμογή εκτελείται μέσω \textlatin{Docker}, διασφαλίζοντας ότι είναι εύκολα \textlatin{shareable} και επαναχρησιμοποιήσιμη σε κάθε περιβάλλον.
+
+\subsection{\textlatin{UML} Διάγραμμα}
+
+\begin{alltt}
+\scriptsize
++----------------------+        +--------------------+          +--------------------+
+|      Χρήστης          |       |  \textlatin{Streamlit Frontend}|               |\textlatin{Python Backend} |
+|----------------------|  --->  |--------------------|   --->   |--------------------|
+| Αλληλεπιδρά με την    |        |  Εμφάνιση\textlatin{ UI,}              |     | Επεξεργασία   |
+| εφαρμογή             |        |  υποβολή δεδομένων  |            |  δεδομένων       |
++----------------------+        +--------------------+          +--------------------+
+                                        ^                               |
+                                        |                               |
+                                        +-------------------------------+
+                                         \textlatin{Docker} (περιβάλλον εκτέλεσης)
+\end{alltt}
+
+\subsection{Κύρια Συστατικά της Εφαρμογής}
+\begin{enumerate}
+
+\item\textlatin{Streamlit UI}  : Η διεπαφή χρήστη επιτρέπει την επιλογή αρχείου δεδομένων, την εκτέλεση αλγορίθμων, και την εμφάνιση των αποτελεσμάτων.
+\item\textlatin{Python Backend}  : Η επεξεργασία των δεδομένων και η εκτέλεση αλγορίθμων κατηγοριοποίησης γίνεται στον \textlatin{backend}, χρησιμοποιώντας βιβλιοθήκες όπως το \textlatin{scikit-learn} και το \textlatin{pandas}.
+\item\textlatin{Docker Container}  : Η εφαρμογή τρέχει σε περιβάλλον \textlatin{Docker}, ώστε να εξασφαλιστεί ότι όλες οι εξαρτήσεις είναι πλήρως διαχειρίσιμες.
+\end{enumerate}
+
+\section{Υλοποίηση}
+
+Η εφαρμογή αναπτύχθηκε χρησιμοποιώντας τη γλώσσα \textlatin{Python} και τις ακόλουθες τεχνολογίες:
+\begin{enumerate}
+
+\item\textlatin{Streamlit}  : Χρησιμοποιείται για την κατασκευή του \textlatin{front-end} και της διεπαφής χρήστη.
+\item\textlatin{scikit-learn}  : Για την εφαρμογή αλγορίθμων μηχανικής μάθησης, όπως \textlatin{KNN}, \textlatin{Random Forest}, και \textlatin{PCA}/\textlatin{UMAP}.
+\item\textlatin{Docker}  : Για την πακετοποίηση της εφαρμογής σε ένα \textlatin{container} που περιλαμβάνει όλα τα απαραίτητα \textlatin{dependencies}.
+\end{enumerate}
+
+\subsection{Αρχεία Εφαρμογής}
+\begin{enumerate}
+\item\textlatin{app.py}: Το κύριο πρόγραμμα που εκτελεί την εφαρμογή και περιλαμβάνει τον κώδικα για την φόρτωση δεδομένων, την επιλογή χαρακτηριστικών, και την εκτέλεση αλγορίθμων.
+\item\textlatin{Dockerfile}  : Περιγράφει το περιβάλλον \textlatin{Docker}, εγκαθιστά τις απαραίτητες εξαρτήσεις και τρέχει την εφαρμογή.
+\item\textlatin{requirements.txt}  : Περιέχει όλες τις \textlatin{Python} βιβλιοθήκες που απαιτούνται για τη λειτουργία της εφαρμογής.
+\end{enumerate}
+
+\subsection{Ροή Λειτουργίας}
+\begin{enumerate}
+\itemΟ χρήστης φορτώνει ένα αρχείο δεδομένων από το \textlatin{UI}.
+\itemΗ εφαρμογή εκτελεί προκαθορισμένες λειτουργίες όπως προεπεξεργασία, οπτικοποίηση και επιλογή χαρακτηριστικών.
+\itemΟ χρήστης επιλέγει έναν αλγόριθμο κατηγοριοποίησης και η εφαρμογή εμφανίζει τα αποτελέσματα.
+\end{enumerate}
+
+\section{Αποτελέσματα Αναλύσεων}
+
+Κατά την ανάλυση των δεδομένων, χρησιμοποιήθηκαν οι εξής αλγόριθμοι:
+\begin{enumerate}
+\item\textlatin{KNN}  : Εκτελέστηκε πριν και μετά την επιλογή χαρακτηριστικών, επιδεικνύοντας τις επιδόσεις του στις μετρικές \textlatin{accuracy}, \textlatin{F1-score}, και \textlatin{ROC-AUC}.
+\item\textlatin{Random Forest}  : Παρουσίασε υψηλή απόδοση σε σύγκριση με άλλους αλγορίθμους.
+\item\textlatin{PCA} και \textlatin{UMAP}  : Χρησιμοποιήθηκαν για τη μείωση διάστασης και την οπτικοποίηση των δεδομένων σε δύο και τρεις διαστάσεις.
+\end{enumerate}
+Παρακάτω παρουσιάζονται τα αποτελέσματα από τις μετρικές των αλγορίθμων κατηγοριοποίησης:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+Αλγόριθμος & \textlatin{Accuracy} & \textlatin{F1-Score} & \textlatin{ROC-AUC} \\
+\hline
+\textlatin{KNN} (πριν την επιλογή χαρακτηριστικών) & 0.85 & 0.84 & 0.88 \\
+\textlatin{KNN} (μετά την επιλογή χαρακτηριστικών) & 0.88 & 0.87 & 0.90 \\
+\textlatin{Random Forest} & 0.90 & 0.89 & 0.92 \\
+\hline
+\end{tabular}
+\caption{Αποτελέσματα των αλγορίθμων κατηγοριοποίησης}
+\end{table}
+
+\section{Κύκλος Ζωής Έκδοσης Λογισμικού}
+
+Η ανάπτυξη της εφαρμογής ακολούθησε το μοντέλο ανάπτυξης   \textlatin{Agile}  , επιτρέποντας την σταδιακή υλοποίηση των λειτουργιών και τη διαρκή βελτίωση της εφαρμογής. Η \textlatin{Agile} μεθοδολογία περιλάμβανε διαδοχικά \textlatin{sprints} με στόχο την κυκλοφορία σταθερών εκδόσεων σε κάθε βήμα.
+
+\subsection{Προσαρμογή του \textlatin{Agile} Μοντέλου}
+\begin{enumerate}
+\item\textlatin{Sprint 1}  : Υλοποίηση της βασικής διεπαφής χρήστη και φόρτωσης δεδομένων.
+\item\textlatin{Sprint 2}  : Προσθήκη αλγορίθμων επιλογής χαρακτηριστικών και κατηγοριοποίησης.
+\item\textlatin{Sprint 3}  : Βελτίωση της οπτικοποίησης δεδομένων και δοκιμές.
+\end{enumerate}
+
+Η \textlatin{Agile} προσέγγιση επιτρέπει τη συνεχή προσαρμογή της εφαρμογής στις ανάγκες των χρηστών και την εύκολη ενσωμάτωση νέων λειτουργιών στο μέλλον.
+
+\section{Συμπεράσματα και Μελλοντικές Βελτιώσεις}
+
+Η εφαρμογή επιτυγχάνει τον στόχο της προσφέροντας μια ολοκληρωμένη λύση για εξόρυξη και ανάλυση δεδομένων, βασισμένη σε σύγχρονες τεχνολογίες όπως το \textlatin{Streamlit} και το \textlatin{Docker}. Οι αλγόριθμοι κατηγοριοποίησης προσφέρουν αξιόπιστα αποτελέσματα και οι δυνατότητες επιλογής χαρακτηριστικών βελτιώνουν την απόδοση της ανάλυσης. Μελλοντικές βελτιώσεις μπορεί να περιλαμβάνουν:
+
+\begin{enumerate}
+\item Ενσωμάτωση περισσότερων αλγορίθμων μηχανικής μάθησης.
+\item Προσθήκη λειτουργιών για την επεξεργασία μεγαλύτερων συνόλων δεδομένων.
+\item Δυνατότητα εξαγωγής των αποτελεσμάτων σε διάφορες μορφές αρχείων.
+\end{enumerate}
+
+\section{Βιβλιογραφία}
+
+\begin{enumerate}
+    \item \textlatin{Pedregosa et al., 2011. Scikit-learn: Machine Learning in Python. JMLR 12, pp. 2825-2830}.
+    \item \textlatin{A Beginners Guide To Streamlit https://www.geeksforgeeks.org/a-beginners-guide-to-streamlit/}
+    .
+\end{enumerate}
+
+
+\end{document}
